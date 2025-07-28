@@ -1,0 +1,78 @@
+Welcome back code monkeys! Today we will be building a simple yet effective way to showcase our AWS skills, suitable for beginners exploring what the Cloud has to offer. In this project, we will be deploying a static website with a custom domain name, which will take about 15-20 minutes to complete
+
+
+
+What will we need?
+
+An [AWS account](https://signin.aws.amazon.com/signup?request_type=register)
+
+Access to [Route 53
+](https://aws.amazon.com/route53/)
+
+An empty [S3  #bucket](https://aws.amazon.com/s3/)
+
+
+How much will it cost?
+
+Most of this will use AWS free tier and should only invoke little to no cost. Feel free to use [AWS pricing calculator ](https://calculator.aws/#/)for more in-depth information.
+
+S3 bucket cost 
+![S3 bucket cost](https://github.com/user-attachments/assets/f55519f4-024b-4344-9bcc-a4f150adadbf)
+
+Route 53
+The cheapest domain name runs about 5-14$, for more information please refer to [AWS official pricing](https://d32ze2gidvkk54.cloudfront.net/Amazon_Route_53_Domain_Registration_Pricing_20140731.pdf?v=ERCTU) 
+
+
+
+
+What's the Architectural Design?
+
+![image](https://github.com/user-attachments/assets/a4ba6805-a104-4704-8282-6bd5aaf987a7)
+
+
+Steps 1- Register The Domain Name
+-Navigate over to Route 53
+-Click "Registered Doamin"
+-Write in whatever domain name you prefer
+-Click for availability and add to cart
+- Fills in contact details and accept Terms and Conditions when finished
+
+Keep in mind, the domain name registration may take up to 3 days to fully complete. But usually it's up and running with an hour 
+
+Step 2- Setting up S3 bucket
+-Navigate to the S3 bucket
+-Click create a bucket
+-Use the Route 53 domain name you choosed as the bucket name
+-Be sure to choose the corresponding AWS Region, as this helps with lower latency
+-Uncheck "Block All Public Access"
+-Finish creating bucket
+-Once bucket is available, select upload and choose whatever file you wish to display
+-Click on properties and enable "Static Website Hosting" at the bottom
+-Be sure to fill in "index.html" and "error.html" and click save change 
+-Next, navigate to the permission tab and scroll down to bucket policy
+-Click edit  and saved the following bucket policy
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "PublicReadGetObject",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": [
+                "s3:GetObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::Bucket-Name/*"
+            ]
+        }
+    ]
+} 
+
+Be sure to replace the "arn:aws:s3" with your own, which can be found under the uploaded file properties tabs
+![Screenshot (27)](https://github.com/user-attachments/assets/a3aad07c-c216-4795-8ab9-aa4cadadaf03)
+
+![Screenshot (25)](https://github.com/user-attachments/assets/651ec35a-26dc-41d5-9190-95294ec9ce7c)
+
+The final product 
+![Screenshot (28)](https://github.com/user-attachments/assets/d51298db-756f-4692-a293-0785a37c8bc9)
